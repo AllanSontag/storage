@@ -1,74 +1,42 @@
 {
-  "name": "@vercel/edge-config",
-  "version": "1.4.0",
-  "description": "Ultra-low latency data at the edge",
-  "homepage": "https://vercel.com",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/vercel/storage.git",
-    "directory": "packages/edge-config"
-  },
-  "license": "Apache-2.0",
-  "sideEffects": false,
-  "type": "module",
-  "exports": {
-    "import": "./dist/index.js",
-    "require": "./dist/index.cjs"
-  },
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.js",
-  "files": [
-    "dist"
-  ],
+  "name": "painel-financeiro",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch --clean=false",
-    "lint": "eslint --max-warnings=0 .",
-    "prepublishOnly": "pnpm run build",
-    "prettier-check": "prettier --check .",
-    "publint": "npx publint",
-    "test": "pnpm run test:node && pnpm run test:edge && pnpm run test:common",
-    "test:common": "jest --env @edge-runtime/jest-environment .common.test.ts && jest --env node .common.test.ts",
-    "test:edge": "jest --env @edge-runtime/jest-environment .edge.test.ts",
-    "test:node": "jest --env node .node.test.ts",
-    "type-check": "tsc --noEmit"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "setupFiles": [
-      "<rootDir>/jest/setup.js"
-    ],
-    "testEnvironment": "node"
+    "dev": "next dev",
+    "build": "prisma generate && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@vercel/edge-config-fs": "workspace:*"
+    "@prisma/client": "latest",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@vercel/edge-config": "^0.4.1",
+    "bcrypt": "^5.1.1",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.0.0",
+    "date-fns": "^3.0.0",
+    "lucide-react": "^0.294.0",
+    "next": "14.0.3",
+    "next-auth": "^4.24.5",
+    "react": "^18",
+    "react-day-picker": "^8.10.1",
+    "react-dom": "^18",
+    "tailwind-merge": "^2.1.0",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@changesets/cli": "2.27.10",
-    "@edge-runtime/jest-environment": "2.3.10",
-    "@edge-runtime/types": "2.2.9",
-    "@types/jest": "29.5.14",
-    "@types/node": "22.10.2",
-    "eslint": "8.56.0",
-    "eslint-config-custom": "workspace:*",
-    "jest": "29.7.0",
-    "jest-fetch-mock": "3.0.3",
-    "node-domexception": "2.0.1",
-    "prettier": "3.4.2",
-    "ts-jest": "29.2.5",
-    "tsconfig": "workspace:*",
-    "tsup": "8.3.5",
-    "typescript": "5.6.3"
-  },
-  "peerDependencies": {
-    "@opentelemetry/api": "^1.7.0"
-  },
-  "peerDependenciesMeta": {
-    "@opentelemetry/api": {
-      "optional": true
-    }
-  },
-  "engines": {
-    "node": ">=14.6"
+    "@types/bcrypt": "^5.0.2",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.0.1",
+    "eslint": "^8",
+    "eslint-config-next": "14.0.3",
+    "postcss": "^8",
+    "prisma": "^5.6.0",
+    "tailwindcss": "^3.3.0",
+    "typescript": "^5"
   }
 }
