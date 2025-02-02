@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { Eye, EyeOff } from 'lucide-react'
 import { Button } from "@/components/ui/button"
@@ -12,7 +11,6 @@ import Image from 'next/image'
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const router = useRouter()
 
   // Check if user is already logged in
   useEffect(() => {
@@ -28,9 +26,9 @@ export default function LoginPage() {
 
     try {
       // Get form data
-      const formData = new FormData(e.currentTarget)
-      const email = formData.get('email') as string
-      const password = formData.get('password') as string
+      // const formData = new FormData(e.currentTarget)
+      // const email = formData.get('email') as string
+      // const password = formData.get('password') as string
 
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000))
@@ -123,7 +121,7 @@ export default function LoginPage() {
 
         <div className="text-center">
           <p className="text-[#6d7589]">
-            Don't have an account?{' '}
+            Don&eapos;t have an account?{' '}
             <Link href="/create-account" className="text-[#F65C47] hover:underline">
               Create account
             </Link>

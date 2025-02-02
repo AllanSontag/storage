@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowLeft, Volume, Vibrate } from "lucide-react"
+import { ArrowLeft, Volume } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"

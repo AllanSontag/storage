@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Eye, EyeOff } from "lucide-react"
@@ -16,7 +16,7 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [userNotFound, setUserNotFound] = useState(false)
-  const router = useRouter()
+  // const router = useRouter()
   const { showToast } = useToast()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -120,7 +120,7 @@ export default function LoginPage() {
 
           {userNotFound && (
             <p className="text-red-500 text-sm mt-2">
-              The email or password could be wrong, or sign up if you don't have an account.
+              The email or password could be wrong, or sign up if you don&eapos;t have an account.
             </p>
           )}
 

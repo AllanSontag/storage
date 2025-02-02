@@ -1,15 +1,9 @@
-import { ToastProvider } from "@/contexts/ToastContext"
 import { ThemeProvider } from "@/contexts/ThemeContext"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import {
   Toast,
-  ToastProvider as ToastProvider2, //Renamed to avoid conflict
-  ToastViewport,
-  ToastTitle,
-  ToastDescription,
-  ToastClose,
-  ToastAction,
+  ToastProvider
 } from "@/components/ui/toast"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -66,6 +60,7 @@ export const metadata = {
     width: "device-width",
     initialScale: 1,
     maximumScale: 1,
+    themeColor: '#4B0082',
   },
 }
 
