@@ -62,9 +62,9 @@ export default function ProfilePage() {
 
         // Check if the avatar URL is valid
         if (avatarUrl) {
-          const img = new Image()
-          img.onload = () => setAvatarError(false)
-          img.onerror = () => setAvatarError(true)
+          const img = new Image();
+          img.onload = (event: Event) => setAvatarError(false)
+          img.onerror = (event: Event | string) => setAvatarError(true)
           img.src = avatarUrl
         }
       } else {
