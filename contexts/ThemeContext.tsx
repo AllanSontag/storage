@@ -3,10 +3,11 @@
 import type React from "react"
 import { createContext, useContext, useState } from "react"
 
-type Theme = "dark"
+type Theme = "light" | "dark"
 
 interface ThemeContextType {
   theme: Theme
+  toggleTheme: () => void
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
@@ -20,11 +21,15 @@ export const useTheme = () => {
 }
 
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [theme] = useState<Theme>("dark")
+  const [theme, setTheme] = useState<Theme>("dark")
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"))
+  }
 
   return (
-    <ThemeContext.Provider value={{ theme }}>
-      <div className="dark">{children}</div>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <div className={theme}>{children}</div>
     </ThemeContext.Provider>
   )
 }

@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { ArrowLeft, Send, Check, FileText, ArrowDownLeft, CreditCard, Loader2 } from "lucide-react"
+import { ArrowLeft, Send, ArrowDownLeft, CreditCard, Loader2 } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useTheme } from "@/contexts/ThemeContext"
 import { Button } from "@/components/ui/button"
@@ -26,9 +26,6 @@ export default function AllActivitiesPage() {
   useAuth()
 
   useEffect(() => {
-      fetchActivities()
-  }, [showToast])
-  
     const fetchActivities = async () => {
       try {
         setIsLoading(true)
@@ -47,7 +44,8 @@ export default function AllActivitiesPage() {
       }
     }
 
-
+    fetchActivities()
+  }, [showToast])
 
   const getActivityIcon = (type: string) => {
     switch (type) {
