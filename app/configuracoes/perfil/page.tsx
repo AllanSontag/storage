@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
-import { ArrowLeft, Camera, Mail, Phone, MapPin, Loader2, Edit2, AlertCircle } from "lucide-react"
+import { ArrowLeft, Camera, Loader2, Edit2, AlertCircle } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import Image from "next/image"
 import { Input } from "@/components/ui/input"
@@ -86,6 +86,8 @@ export default function ProfilePage() {
 
     try {
       const { data, error } = await supabase.auth.updateUser({
+        // Added user argument here.  The original code was missing this.
+        user: userProfile,
         email: userProfile?.email,
         data: {
           full_name: userProfile?.full_name,
