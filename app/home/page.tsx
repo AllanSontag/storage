@@ -10,7 +10,6 @@ import { Button } from "@/components/ui/button"
 import { useAuth } from "@/hooks/useAuth"
 import { supabase } from "@/lib/supabase"
 import { useToast } from "@/hooks/useToast"
-
 interface Activity {
   id: number
   description: string
@@ -24,6 +23,7 @@ interface BalanceData {
   availableBalance: number
   totalBalance: number
 }
+
 
 export default function HomePage() {
   const router = useRouter()

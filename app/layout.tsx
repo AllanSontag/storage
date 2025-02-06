@@ -5,8 +5,16 @@ import {
   Toast,
   ToastProvider
 } from "@/components/ui/toast"
+import type { Viewport } from "next"
 
 const inter = Inter({ subsets: ["latin"] })
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  themeColor: '#4B0082',
+}
 
 export const metadata = {
   title: "Bruspy",
@@ -29,7 +37,7 @@ export const metadata = {
         url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sem%20nome-X0ADwTZT43SrHbmieNCaka3q5u2zt1.png",
         type: "image/png",
         sizes: "32x32",
-        backgroundColor: "#4B0082",
+        backgroundcolor: "#4B0082",
         purpose: "maskable",
       },
     ],
@@ -38,7 +46,7 @@ export const metadata = {
         url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sem%20nome-X0ADwTZT43SrHbmieNCaka3q5u2zt1.png",
         type: "image/png",
         sizes: "32x32",
-        backgroundColor: "#4B0082",
+        backgroundcolor: "#4B0082",
         purpose: "maskable",
       },
     ],
@@ -47,7 +55,7 @@ export const metadata = {
         url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sem%20nome-X0ADwTZT43SrHbmieNCaka3q5u2zt1.png",
         type: "image/png",
         sizes: "180x180",
-        backgroundColor: "#4B0082",
+        backgroundcolor: "#4B0082",
         purpose: "maskable",
       },
     ],
@@ -55,13 +63,7 @@ export const metadata = {
   robots: {
     index: true,
     follow: true,
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    themeColor: '#4B0082',
-  },
+  }
 }
 
 export default function RootLayout({
@@ -69,6 +71,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  // const supabase = createClient()
+
+  // const {
+  //   data: { user },
+  // } = await supabase.auth.getUser();
+
+  // if (!user) {
+  //   redirect(`/login`);
+  // }
+
+
+
   return (
     <html lang="pt-BR">
       <head>
@@ -78,7 +92,7 @@ export default function RootLayout({
           type="image/png"
           sizes="32x32"
           style={{
-            backgroundColor: "#4B0082",
+            backgroundcolor: "#4B0082",
             padding: "4px",
           }}
         />
@@ -87,7 +101,7 @@ export default function RootLayout({
           href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sem%20nome-X0ADwTZT43SrHbmieNCaka3q5u2zt1.png"
           sizes="180x180"
           style={{
-            backgroundColor: "#4B0082",
+            backgroundcolor: "#4B0082",
             padding: "20px",
           }}
         />

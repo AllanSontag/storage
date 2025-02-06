@@ -20,7 +20,7 @@ export const Card: React.FC<CardProps> = ({ card, onClick, cardType }) => {
       className="flex-shrink-0 w-[320px] h-[160px] rounded-3xl p-4 flex flex-col justify-between cursor-pointer transition-transform hover:scale-105"
       style={{ 
         "--card-bg-color": cardType === 'total' ? "#006400" : "#4B0082",
-        backgroundColor: "var(--card-bg-color)" 
+        backgroundcolor: "var(--card-bg-color)" 
       }}
       onClick={onClick}
     >

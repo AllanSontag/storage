@@ -1,64 +1,53 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Eye, EyeOff } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Image from "next/image"
-import { supabase } from "@/lib/supabase"
 import { useToast } from "@/hooks/useToast"
-//import { PostgrestError } from "@supabase/supabase-js" // Removed as not used
+import { useState } from "react"
+import { supabase } from "@/lib/supabase"
 
 export default function LoginPage() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
+  // const [rememberMe, setRememberMe] = useState(false);
+
+
   const [showPassword, setShowPassword] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [userNotFound, setUserNotFound] = useState(false)
-  // const router = useRouter()
   const { showToast } = useToast()
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setUserNotFound(false)
-    setIsLoading(true)
 
+  async function handleSubmit(e) {
     try {
-      const formData = new FormData(e.currentTarget)
-      const email = formData.get("email") as string
-      const password = formData.get("password") as string
 
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      })
+      e.preventDefault();
+      setLoading(true);
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      // Set both the localStorage flag and the actual session
 
-      if (error) {
-        if (error.message === "Invalid login credentials") {
-          setUserNotFound(true)
-          showToast("The email or password could be wrong, or sign up if you don't have an account.", "error")
-        } else if (error.message === "Email not confirmed") {
-          setUserNotFound(false)
-          showToast("The email was not confirmed, please see your inbox and try again.", "error")
-        } else {
-          showToast(error.message, "error")
-        }
-        return
-      }
-
-      if (data.user) {
+      if (!error) {
+        await supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token
+        });
         showToast("Login successful!", "success")
         // Set both the localStorage flag and the actual session
         localStorage.setItem("isLoggedIn", "true")
-        window.location.href = "/home"
+        window.location.href = '/home';
       } else {
         showToast("An unexpected error occurred. Please try again.", "error")
+        console.error(`Login Error: ${error}`);
       }
+      setLoading(false);
+
     } catch (error) {
       console.error("Login error:", error)
     } finally {
-      setIsLoading(false)
+      setLoading(false)
     }
   }
 
@@ -90,6 +79,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               placeholder="Digite seu email"
+              onChange={(e) => setEmail(e.target.value)}
               required
               className="bg-[#3C096C] border-none text-white placeholder-gray-400"
             />
@@ -105,24 +95,32 @@ export default function LoginPage() {
                 name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Digite sua senha"
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 className="bg-[#3C096C] border-none text-white placeholder-gray-400 pr-10"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
-              >
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white">
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
             </div>
           </div>
-
-          {userNotFound && (
+          {/* <div className="flex items-center space-x-2 mb-4">
+            <Checkbox id="rememberMe" checked={rememberMe} onCheckedChange={setRememberMe} />
+            <label
+              htmlFor="rememberMe"
+              className="text-sm text-gray-400 cursor-pointer"
+            >
+              Remember me
+            </label>
+          </div> */}
+          {/* {userNotFound && (
             <p className="text-red-500 text-sm mt-2">
               The email or password could be wrong, or sign up if you don&eapos;t have an account.
             </p>
-          )}
+          )} */}
 
           <div className="flex items-center justify-end">
             <Link href="/recuperar-senha" className="text-sm text-[#F65C47] hover:underline">
@@ -130,8 +128,8 @@ export default function LoginPage() {
             </Link>
           </div>
 
-          <Button type="submit" className="w-full bg-[#3C096C] text-white hover:bg-[#3C096C]/80" disabled={isLoading}>
-            {isLoading ? "Entrando..." : "Entrar"}
+          <Button type="submit" className="w-full bg-[#3C096C] text-white hover:bg-[#3C096C]/80" disabled={loading}>
+            {loading ? "Entrando..." : "Entrar"}
           </Button>
         </form>
 

@@ -85,7 +85,7 @@ export default function MenuPage() {
               key={item.id}
               onClick={() => router.push(item.href)}
               className="p-6 rounded-3xl flex flex-col items-center text-center"
-              style={{ backgroundColor: item.color }}
+              style={{ backgroundcolor: item.color }}
             >
               <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center mb-4">
                 {item.icon}
