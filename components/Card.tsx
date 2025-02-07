@@ -18,12 +18,8 @@ export const Card: React.FC<CardProps> = ({ card, onClick, cardType }) => {
   return (
     <div
       className="flex-shrink-0 w-[320px] h-[160px] rounded-3xl p-4 flex flex-col justify-between cursor-pointer transition-transform hover:scale-105"
-      style={{ 
-        "--card-bg-color": cardType === 'total' ? "#006400" : "#4B0082",
-        backgroundcolor: "var(--card-bg-color)" 
-      }}
-      onClick={onClick}
-    >
+      style={{ backgroundColor: cardType === 'total' ? "#006400" : "#4B0082" }}
+      onClick={onClick}>
       <div className="flex justify-between items-start">
         <img
           src="https://v0.blob.com/visa-white.png"

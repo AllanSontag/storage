@@ -113,15 +113,14 @@ export default function ProfilePage() {
         throw uploadError
       }
 
-      const { data: urlData, error: urlError } = await supabase.storage.from("avatars").getPublicUrl(filePath)
+      const { data: urlData } = await supabase.storage.from("avatars").getPublicUrl(filePath)
 
-      if (urlError) {
-        throw urlError
+      if (!urlData || !urlData.publicUrl) {
+        throw new Error("Failed to get public URL.");
       }
 
-      const newAvatarUrl = urlData.publicUrl
-      setAvatarUrl(newAvatarUrl)
-
+      const newAvatarUrl = urlData.publicUrl;
+      setAvatarUrl(newAvatarUrl);
       const { error: updateError } = await supabase.auth.updateUser({
         data: { avatar_url: newAvatarUrl },
       })

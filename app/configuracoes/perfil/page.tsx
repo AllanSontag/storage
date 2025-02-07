@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { ArrowLeft, Camera, Loader2, Edit2, AlertCircle } from "lucide-react"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import {Image} from "next/image"
+import Image from "next/image"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { useToast } from "@/hooks/useToast"
@@ -62,7 +62,7 @@ export default function ProfilePage() {
 
         // Check if the avatar URL is valid
         if (avatarUrl) {
-          const img = new Image();
+          const img = new (window.Image as { new(): HTMLImageElement })();
           img.onload = (event: Event) => setAvatarError(false)
           img.onerror = (event: Event | string) => setAvatarError(true)
           img.src = avatarUrl
@@ -87,7 +87,6 @@ export default function ProfilePage() {
     try {
       const { data, error } = await supabase.auth.updateUser({
         // Added user argument here.  The original code was missing this.
-        user: userProfile,
         email: userProfile?.email,
         data: {
           full_name: userProfile?.full_name,
@@ -132,15 +131,16 @@ export default function ProfilePage() {
         throw uploadError
       }
 
-      const { data: urlData, error: urlError } = await supabase.storage.from("avatars").getPublicUrl(filePath)
+      const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
 
-      if (urlError) {
-        throw urlError
+      if (!data || !data.publicUrl) {
+        throw new Error("Failed to get public URL.");
       }
-
-      const newAvatarUrl = urlData.publicUrl
-      setAvatarUrl(newAvatarUrl)
-
+      
+      const newAvatarUrl = data.publicUrl;
+      
+      setAvatarUrl(newAvatarUrl);
+      
       const { error: updateError } = await supabase.auth.updateUser({
         data: { avatar_url: newAvatarUrl },
       })

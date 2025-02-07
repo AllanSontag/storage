@@ -1,10 +1,7 @@
 import { ThemeProvider } from "@/contexts/ThemeContext"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import {
-  Toast,
-  ToastProvider
-} from "@/components/ui/toast"
+import { Toast, ToastProvider } from "@/components/ui/toast"
 import type { Viewport } from "next"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -37,7 +34,7 @@ export const metadata = {
         url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sem%20nome-X0ADwTZT43SrHbmieNCaka3q5u2zt1.png",
         type: "image/png",
         sizes: "32x32",
-        backgroundcolor: "#4B0082",
+        backgroundColor: "#4B0082",
         purpose: "maskable",
       },
     ],
@@ -46,7 +43,7 @@ export const metadata = {
         url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sem%20nome-X0ADwTZT43SrHbmieNCaka3q5u2zt1.png",
         type: "image/png",
         sizes: "32x32",
-        backgroundcolor: "#4B0082",
+        backgroundColor: "#4B0082",
         purpose: "maskable",
       },
     ],
@@ -55,7 +52,7 @@ export const metadata = {
         url: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sem%20nome-X0ADwTZT43SrHbmieNCaka3q5u2zt1.png",
         type: "image/png",
         sizes: "180x180",
-        backgroundcolor: "#4B0082",
+        backgroundColor: "#4B0082",
         purpose: "maskable",
       },
     ],
@@ -92,7 +89,7 @@ export default function RootLayout({
           type="image/png"
           sizes="32x32"
           style={{
-            backgroundcolor: "#4B0082",
+            backgroundColor: "#4B0082",
             padding: "4px",
           }}
         />
@@ -101,7 +98,7 @@ export default function RootLayout({
           href="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Design%20sem%20nome-X0ADwTZT43SrHbmieNCaka3q5u2zt1.png"
           sizes="180x180"
           style={{
-            backgroundcolor: "#4B0082",
+            backgroundColor: "#4B0082",
             padding: "20px",
           }}
         />

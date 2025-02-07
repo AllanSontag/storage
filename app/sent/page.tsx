@@ -360,7 +360,7 @@ export default function SentPage() {
                   variant="ghost"
                   size="sm"
                   className="mt-1 text-[#F65C47] hover:text-[#F65C47]/80"
-                  onClick={() => window.open(transaction.receipt_url, "_blank")}
+                  onClick={() => transaction.receipt_url && window.open(transaction.receipt_url, "_blank")}
                 >
                   <Upload className="w-4 h-4 mr-1" />
                   View Receipt
