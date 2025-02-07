@@ -21,8 +21,10 @@ export default function LoginPage() {
   const { showToast } = useToast()
 
 
-  async function handleSubmit() {
+  async function handleSubmit(e: any) {
     try {
+
+      e.preventDefault();
       setLoading(true);
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       // Set both the localStorage flag and the actual session
