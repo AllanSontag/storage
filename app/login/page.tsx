@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  // const [rememberMe, setRememberMe] = useState(false);
+  const [userNotFound, setUserNotFound] = useState(false);
 
 
   const [showPassword, setShowPassword] = useState(false)
@@ -28,22 +28,44 @@ export default function LoginPage() {
       setLoading(true);
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       // Set both the localStorage flag and the actual session
+      // if (!error) {
+      //   await supabase.auth.setSession({
+      //     access_token: data.session.access_token,
+      //     refresh_token: data.session.refresh_token
+      //   });
+      //   showToast("Login successful!", "success")
+      //   // Set both the localStorage flag and the actual session
+      //   localStorage.setItem("isLoggedIn", "true")
+      //   window.location.href = '/home';
+      // } else {
+      //   showToast("An unexpected error occurred. Please try again.", "error")
+      //   console.error(`Login Error: ${error}`);
+      //   { userNotFound: true }
 
-      if (!error) {
-        await supabase.auth.setSession({
-          access_token: data.session.access_token,
-          refresh_token: data.session.refresh_token
-        });
+      // }
+      // setLoading(false);
+
+      if (error) {
+        if (error.message === "Invalid login credentials") {
+          setUserNotFound(true)
+          showToast("The email or password could be wrong, or sign up if you don't have an account.", "error")
+        } else if (error.message === "Email not confirmed") {
+          setUserNotFound(false)
+          showToast("The email was not confirmed, please see your inbox and try again.", "error")
+        } else {
+          showToast(error.message, "error")
+        }
+        return
+      }
+
+      if (data.user) {
         showToast("Login successful!", "success")
         // Set both the localStorage flag and the actual session
         localStorage.setItem("isLoggedIn", "true")
-        window.location.href = '/home';
+        window.location.href = "/home"
       } else {
         showToast("An unexpected error occurred. Please try again.", "error")
-        console.error(`Login Error: ${error}`);
       }
-      setLoading(false);
-
     } catch (error) {
       console.error("Login error:", error)
     } finally {
@@ -107,20 +129,11 @@ export default function LoginPage() {
               </button>
             </div>
           </div>
-          {/* <div className="flex items-center space-x-2 mb-4">
-            <Checkbox id="rememberMe" checked={rememberMe} onCheckedChange={setRememberMe} />
-            <label
-              htmlFor="rememberMe"
-              className="text-sm text-gray-400 cursor-pointer"
-            >
-              Remember me
-            </label>
-          </div> */}
-          {/* {userNotFound && (
+          {userNotFound && (
             <p className="text-red-500 text-sm mt-2">
-              The email or password could be wrong, or sign up if you don&eapos;t have an account.
+              The email or password could be wrong, or sign up if you don't have an account.
             </p>
-          )} */}
+          )}
 
           <div className="flex items-center justify-end">
             <Link href="/recuperar-senha" className="text-sm text-[#F65C47] hover:underline">
@@ -136,7 +149,7 @@ export default function LoginPage() {
         <div className="text-center">
           <p className="text-[#6d7589]">
             Ainda não tem uma conta?{" "}
-            <Link href="/criar-conta" className="text-[#F65C47] hover:underline">
+            <Link href="/create-account" className="text-[#F65C47] hover:underline">
               Criar conta
             </Link>
           </p>
