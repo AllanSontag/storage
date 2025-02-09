@@ -15,11 +15,10 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
-
-
   const [showPassword, setShowPassword] = useState(false)
   const { showToast } = useToast()
 
+  const [loginMessage, setLoginMessage] = useState('');
 
   async function handleSubmit(e: any) {
     try {
@@ -46,15 +45,15 @@ export default function LoginPage() {
       // setLoading(false);
 
       if (error) {
-        if (error.message === "Invalid login credentials") {
-          setUserNotFound(true)
-          showToast("The email or password could be wrong, or sign up if you don't have an account.", "error")
-        } else if (error.message === "Email not confirmed") {
-          setUserNotFound(false)
-          showToast("The email was not confirmed, please see your inbox and try again.", "error")
+        if (error.code === "email_not_confirmed") {
+          setLoginMessage('Email não confirmado, verifique seu email, ou entre em contato com o suporte.');
+        } else if (error.code === "invalid_credentials") {
+          setLoginMessage("O Email ou a senha podem estar incorretos, verifique e tente novamente");
         } else {
-          showToast(error.message, "error")
+          setLoginMessage(`${error.message} - ${error.code}`);
         }
+        showToast(loginMessage, "error")
+
         return
       }
 
@@ -129,9 +128,9 @@ export default function LoginPage() {
               </button>
             </div>
           </div>
-          {userNotFound && (
+          {loginMessage && (
             <p className="text-red-500 text-sm mt-2">
-              The email or password could be wrong, or sign up if you don't have an account.
+              {loginMessage}
             </p>
           )}
 

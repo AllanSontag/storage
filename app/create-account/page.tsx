@@ -10,13 +10,13 @@ import { Label } from "@/components/ui/label"
 import Image from "next/image"
 import { supabase } from "@/lib/supabase"
 import { useToast } from "@/hooks/useToast"
-import type { PostgrestError } from "@supabase/supabase-js"
 
 export default function CreateAccountPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
   const { showToast } = useToast()
+  const [signUpMessage, setSignUpMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -38,7 +38,19 @@ export default function CreateAccountPage() {
         },
       })
 
+
       if (error) {
+        if (error.code === "unexpected_failure") {
+          setSignUpMessage('Ocorreu um erro ao gravar o cadastro, entre em contato com o suporte.');
+        } else if (error.code === "signup_disabled") {
+          setSignUpMessage("O cadastro de novos usuários está temporáriamente desabilitada.");
+        } else if (error.code === "weak_password") {
+          setSignUpMessage(`A sua senha deve preencher aos requisitos mínimos: ${error.message}`);
+        } else {
+          setSignUpMessage(`${error.message} - ${error.code}`);
+        }
+        showToast(signUpMessage, "error")
+
         throw error
       }
 
@@ -126,12 +138,13 @@ export default function CreateAccountPage() {
               </button>
             </div>
           </div>
-
           <Button type="submit" className="w-full bg-[#240046] text-white hover:bg-[#240046]/90" disabled={isLoading}>
             {isLoading ? "Creating account..." : "Create account"}
           </Button>
         </form>
-
+        <p className="text-red-500 text-sm mt-2">
+          {signUpMessage}
+        </p>
         <div className="text-center">
           <p className="text-[#6d7589]">
             Already have an account?{" "}
