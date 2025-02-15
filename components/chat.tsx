@@ -13,7 +13,6 @@
 
 
 //     const openai = new OpenAI({
-//         apiKey: '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',//process.env.OPENAI_API_KEY, // Chave no .env.local
 //     });
 
 //     const sendMessage = async () => {
