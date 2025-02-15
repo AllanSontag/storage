@@ -8,7 +8,7 @@ export const BottomNavigation: React.FC = () => {
   return (
     <div className="fixed bottom-0 left-0 right-0 h-20 bg-[#3C096C] flex items-center justify-between px-6">
       <NavItem icon={<Home />} label="Home" onClick={() => router.push("/home")} />
-      <NavItem icon={<MessageCircle />} label="Help" disabled="disabled" onClick={() => router.push("/help")} />
+      <NavItem icon={<MessageCircle />} label="Help" onClick={() => router.push("/help")} />
       <NavItem icon={<FileText />} label="Invoices" onClick={() => router.push("/invoices")} />
       <NavItem icon={<Truck />} label="Logistics" onClick={() => router.push("/logistics")} />
       <NavItem icon={<Cog />} label="Settings" onClick={() => router.push("/configuracoes")} />
