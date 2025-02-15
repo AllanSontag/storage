@@ -45,7 +45,7 @@ export default function AllActivitiesPage() {
     }
 
     fetchActivities()
-  }, [showToast])
+  },[])
 
   const getActivityIcon = (type: string) => {
     switch (type) {
@@ -116,4 +116,6 @@ export default function AllActivitiesPage() {
     </div>
   )
 }
+
+
 

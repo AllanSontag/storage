@@ -59,6 +59,8 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true)
   const { showToast } = useToast()
   const [firstName, setFirstName] = useState("User")
+  const [avatarUrl, setAvatarUrl] = useState("")
+  const [initials, setInitials] = useState("")
   const [userId, setUserId] = useState<string | null>(null)
 
   useAuth()
@@ -70,10 +72,23 @@ export default function HomePage() {
       } = await supabase.auth.getUser()
       if (user?.user_metadata?.full_name) {
         setFirstName(user.user_metadata.full_name.split(" ")[0])
+
+        const fullName = user.user_metadata.full_name || ""
+        const [firstName = "", lastName = ""] = fullName.split(" ")
+        const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase()        
+        setInitials(initials);
+      }
+      if (user?.user_metadata?.avatar_url) {
+        setAvatarUrl(user.user_metadata.avatar_url);
+        if (avatarUrl) {
+          const img = new (window.Image as { new(): HTMLImageElement })();
+          img.src = avatarUrl
+        }
       }
       setUserId(user?.id || null)
       if (user?.id) {
-        fetchBalanceData(user.id)
+        setUserId(user.id)
+        fetchBalanceData(userId)
         fetchActivities()
       }
     }
@@ -188,9 +203,14 @@ export default function HomePage() {
       {/* Header */}
       <div className="p-6 flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <Avatar className="w-12 h-12 cursor-pointer" onClick={() => router.push("/profile")}>
-            <AvatarImage src="/placeholder.svg" alt="User avatar" />
-            <AvatarFallback>JD</AvatarFallback>
+          <Avatar className="w-12 h-12 cursor-pointer" onClick={() => router.push("/configuracoes/perfil")}>
+            {/* <AvatrImage src="avatarUrl" alt="User avatar" /> */}
+            <AvatarImage
+              src={avatarUrl || "/placeholder.svg"}
+              alt={`${firstName}'s avatar`}
+              className="object-cover rounded-full"
+            />
+            <AvatarFallback>{initials}</AvatarFallback>
           </Avatar>
           <div>
             <h1

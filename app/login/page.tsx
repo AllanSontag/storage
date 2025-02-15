@@ -26,23 +26,6 @@ export default function LoginPage() {
       e.preventDefault();
       setLoading(true);
       const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-      // Set both the localStorage flag and the actual session
-      // if (!error) {
-      //   await supabase.auth.setSession({
-      //     access_token: data.session.access_token,
-      //     refresh_token: data.session.refresh_token
-      //   });
-      //   showToast("Login successful!", "success")
-      //   // Set both the localStorage flag and the actual session
-      //   localStorage.setItem("isLoggedIn", "true")
-      //   window.location.href = '/home';
-      // } else {
-      //   showToast("An unexpected error occurred. Please try again.", "error")
-      //   console.error(`Login Error: ${error}`);
-      //   { userNotFound: true }
-
-      // }
-      // setLoading(false);
 
       if (error) {
         if (error.code === "email_not_confirmed") {

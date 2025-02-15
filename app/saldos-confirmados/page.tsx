@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { supabase } from "@/lib/supabase"
 import { useToast } from "@/hooks/useToast"
 import { useAuth } from "@/hooks/useAuth"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 interface ConfirmedTransaction {
   id: string
@@ -63,9 +62,8 @@ export default function SaldosConfirmadosPage() {
 
   return (
     <div
-      className={`min-h-screen ${
-        theme === "light" ? "bg-gradient-to-b from-[#F65C47] to-[#3E005B] text-white" : "bg-[#10002B] text-white"
-      }`}
+      className={`min-h-screen ${theme === "light" ? "bg-gradient-to-b from-[#F65C47] to-[#3E005B] text-white" : "bg-[#10002B] text-white"
+        }`}
     >
       {/* Header */}
       <div className="p-6 flex items-center gap-4">
@@ -76,22 +74,17 @@ export default function SaldosConfirmadosPage() {
       </div>
 
       {/* Total Confirmed Balance */}
-      <div className="px-6 mb-6">
-        <Card className="bg-[#3C096C]">
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-lg font-medium">Saldo Total Confirmado</CardTitle>
-            <CheckCircle className="h-5 w-5 text-green-500" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold text-green-500">
-              $
-              {totalConfirmedBalance.toLocaleString("pt-BR", {
-                minimumFractionDigits: 2,
-                maximumFractionDigits: 2,
-              })}
-            </div>
-          </CardContent>
-        </Card>
+      <div className="px-6 mt-8">
+        <div className="bg-[#3C096C] p-4 rounded-xl">
+          <h2 className="text-xl font-semibold mb-2">Saldo Total Confirmado</h2>
+          <p className="text-2xl font-bold text-green-500" >
+            $
+            {totalConfirmedBalance.toLocaleString("pt-BR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </p>
+        </div>
       </div>
 
       {/* Confirmed Transactions List */}
